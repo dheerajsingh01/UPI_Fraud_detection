@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthLayout from './ AuthLayout.jsx';
 import AuthForm from '../../componennts/Authentication/AuthForm.jsx';
 import AuthSocial from '../../componennts/Authentication/AuthSocial.jsx';
+import { registerUser } from '../../api.js';
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -12,12 +13,12 @@ const Signup = () => {
   const handleSubmit = async (formData) => {
     setLoading(true);
     try {
-      // Replace with your actual signup API call
-      console.log('Signup data:', formData);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await registerUser(formData);
+      console.log('Signed up:', response);
       navigate('/dashboard');
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error('Signup error:', error.message);
+      alert(error.message);
     } finally {
       setLoading(false);
     }

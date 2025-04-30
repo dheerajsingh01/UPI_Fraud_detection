@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import AuthLayout from './ AuthLayout.jsx';
 import AuthForm from '../../componennts/Authentication/AuthForm.jsx';
 import AuthSocial from '../../componennts/Authentication/AuthSocial.jsx';
+import { loginUser } from '../../api.js';
+
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -11,12 +13,12 @@ const Login = () => {
   const handleSubmit = async (formData) => {
     setLoading(true);
     try {
-      // Replace with your actual login API call
-      console.log('Login data:', formData);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate('/dashboard');
+      const response = await loginUser(formData);
+      console.log('Logged in:', response);
+      navigate('/dash');
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Login error:', error.message);
+      alert(error.message);
     } finally {
       setLoading(false);
     }
